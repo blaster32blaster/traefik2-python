@@ -1,0 +1,21 @@
+version: '3'
+services:
+  python:
+    build: .
+    labels:
+     - "traefik.port=5000"
+     - "traefik.enable=true"
+     - "traefik.http.routers.python.rule=Host(`python.localhost`)"
+     - "traefik.http.routers.python.entrypoints=web"
+    volumes:
+      - ./:/code
+    networks:
+      - traefik_webgateway 
+      - internal
+    restart:
+      always
+networks:
+ traefik_webgateway:
+   external: true
+ internal:
+   external: true    
